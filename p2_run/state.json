@@ -1,0 +1,18 @@
+{
+  "n": 2440,
+  "pilot": null,
+  "claude_model": "claude-sonnet-5-5",
+  "openai_model": "gpt-5.6-terra",
+  "submitted_at": "2026-09-30 21:32:24",
+  "claude_batch": "msgbatch_01AgvVcHAcw2WcveDyHRH2HT",
+  "openai_batches": [
+    "batch_6abdc63bd3d08190aafe8d3f5fbbc1e4",
+    "batch_6abdc6d39fe88190923bc49f2dbfb9ee",
+    "batch_6abdc7a92af48190a5666294aa1b03e8",
+    "batch_6abdc840c88481908e1fe73e60a9a037",
+    "batch_6abdd2822fb88190baf8b46d96f0d389",
+    "batch_6abdd338f1c08190aec11faca02dfb07",
+    "batch_6abdd3d0e7448190b9d516db0b63c0ff"
+  ],
+  "openai_complete": true
+}

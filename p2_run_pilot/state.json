@@ -1,0 +1,9 @@
+{
+  "n": 100,
+  "pilot": 100,
+  "claude_model": "claude-sonnet-5-5",
+  "openai_model": "gpt-5.6-terra",
+  "submitted_at": "2026-09-30 21:18:02",
+  "claude_batch": "msgbatch_01MFtGABnpAsvb8EQn8NT5nN",
+  "openai_batch": "batch_6abdc14377d88190a8f8bc10c03c4936"
+}
