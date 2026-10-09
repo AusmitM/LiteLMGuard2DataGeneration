@@ -25,23 +25,22 @@ from pathlib import Path
 
 import pandas as pd
 
-# ---------------- CONFIG ----------------
-# Hugging Face dataset ID, or a local CSV path
+
 INPUT_SOURCE = "kalyannakka/Answerable-or-Not"
-COL_ID = None                     # dataset has no ID column -> row index (p00000...)
+COL_ID = None                     
 COL_PROMPT = "question"
-COL_ANSWERABLE = "answerable"     # YES / NO
-COL_CATEGORY = "specific_harms"   # 61 fine-grained categories (P1 topic)
+COL_ANSWERABLE = "answerable"    
+COL_CATEGORY = "specific_harms"   
 
 PROMPT_FILE = "p2_labeling_prompt.txt"
 OUT_DIR = Path("p2_run")
 
 CLAUDE_MODEL = "claude-sonnet-5-5"
-OPENAI_MODEL = "gpt-5.6-terra"   # confirm with: python label_p2.py list-models
+OPENAI_MODEL = "gpt-5.6-terra"  
 
 MAX_TOKENS_CLAUDE = 300
-MAX_COMPLETION_TOKENS_OPENAI = 2000   # includes any reasoning tokens
-OPENAI_CHUNK_SIZE = 400               # ~1.6k input tokens/request -> ~650k, under the 900k enqueued limit
+MAX_COMPLETION_TOKENS_OPENAI = 2000  
+OPENAI_CHUNK_SIZE = 400               
 HUMAN_SAMPLE_SIZE = 250
 SEED = 42
 # ----------------------------------------
@@ -96,7 +95,6 @@ def load_state():
     return json.loads(p.read_text()) if p.exists() else {}
 
 
-# ---------------- submit ----------------
 def submit_claude(df, system_prompt):
     import anthropic
     client = anthropic.Anthropic()
@@ -107,8 +105,7 @@ def submit_claude(df, system_prompt):
             "params": {
                 "model": CLAUDE_MODEL,
                 "max_tokens": MAX_TOKENS_CLAUDE,
-                # no temperature: deprecated for claude-sonnet-5-5 (request is rejected)
-                # codebook is identical in every request -> cached
+    
                 "system": [{
                     "type": "text",
                     "text": system_prompt,
@@ -215,7 +212,6 @@ def cmd_resume_openai(_):
     run_openai_chunked(df, Path(PROMPT_FILE).read_text())
 
 
-# ---------------- status ----------------
 def cmd_status(_):
     state = load_state()
     if "claude_batch" in state:
@@ -231,7 +227,6 @@ def cmd_status(_):
             print(f"OpenAI chunk {i + 1}:", b.status, b.request_counts)
 
 
-# ---------------- parse helpers ----------------
 def parse_label_json(text):
     """Return dict with strategy/secondary/confidence/rationale, or None."""
     if not text:
@@ -256,7 +251,6 @@ def parse_label_json(text):
     }
 
 
-# ---------------- collect ----------------
 def collect_claude(batch_id):
     import anthropic
     client = anthropic.Anthropic()
@@ -363,7 +357,6 @@ def cmd_collect(args):
             print(f"GPT: {df['gpt_strategy'].notna().sum()}/{len(df)} parsed (batch status: {s['openai']})")
 
 
-# ---------------- merge ----------------
 def final_p2(strategy, answerable):
     """Plain Request splits into Benign / Harmful Direct Request using the v1 label."""
     if strategy != "Plain Request":
